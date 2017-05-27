@@ -4,15 +4,21 @@ trait HasValue {
 
 struct Null;
 
-struct Node {
-    value: i32,
-    pointer: Null
+impl HasValue for Null {
+    fn get_value(&self) -> i32 {
+        0
+    }
 }
 
-impl Node {
-    fn new(previous: Null) -> Node {
+struct Node<T> {
+    value: i32,
+    pointer: T
+}
+
+impl<T: HasValue> Node<T> {
+    fn new(previous: T) -> Node<T> {
         Node {
-            value: 0,
+            value: previous.get_value() + 1,
             pointer: previous
         }
     }
@@ -20,7 +26,7 @@ impl Node {
 
 fn find_fib(fib_number: i32) {
     let null: Null = Null{};
-    let node: Node = Node::new(null);
+    let node = Node::new(null);
 
     println!("{}", node.value);
 }
