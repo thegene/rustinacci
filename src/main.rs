@@ -1,48 +1,31 @@
-trait HasValue {
-    fn get_value(&self) -> i32;
-    fn get_previous_value(&self) -> i32;
+struct List {
+    head: i32,
+    tail: i32
 }
 
-struct Null;
+impl List {
+    fn new_incremented(&self) -> List {
+        let new_head = match self.head {
+            0 => 1,
+            _ => self.head + self.tail
+        };
 
-impl HasValue for Null {
-    fn get_value(&self) -> i32 {
-        0
-    }
-
-    fn get_previous_value(&self) -> i32 {
-        0
-    }
-}
-
-struct Node<T> {
-    value: i32,
-    previous: T
-}
-
-impl<T: HasValue> Node<T> {
-    fn new(previous: T) -> Node<T> {
-        Node {
-            value: Node::find_new_value(&previous),
-            previous: previous
-        }
-    }
-
-    fn find_new_value(previous: &T) -> i32 {
-        let previous_value = previous.get_value();
-        if previous_value == 0 {
-            1
-        } else {
-            previous_value + previous.get_previous_value()
+        List {
+            head: new_head,
+            tail: self.head
         }
     }
 }
 
 fn find_fib(fib_number: i32) {
-    let head: Null = Null{};
-    let node = Node::new(head);
+    let list = List {
+        head: 0,
+        tail: 0
+    };
 
-    println!("{}", node.value);
+    let new_list = list.new_incremented();
+
+    println!("{}", new_list.head);
 }
 
 fn main() {
