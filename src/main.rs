@@ -4,7 +4,7 @@ struct List {
 }
 
 impl List {
-    fn new_incremented(&self) -> List {
+    fn increment(&self) -> List {
         let new_head = match self.head {
             0 => 1,
             _ => self.head + self.tail
@@ -17,15 +17,18 @@ impl List {
     }
 }
 
-fn find_fib(fib_number: i32) {
-    let list = List {
+fn find_fib(mut fib_number: i32) {
+    let mut list = List {
         head: 0,
         tail: 0
     };
 
-    let new_list = list.new_incremented();
+    while fib_number > 0 {
+        list = list.increment();
+        fib_number -= 1;
+    }
 
-    println!("{}", new_list.head);
+    println!("{}", list.head);
 }
 
 fn main() {
